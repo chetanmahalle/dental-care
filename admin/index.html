@@ -1,172 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Panel - Allright Dental</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
 
+  body {
+    min-height: 100vh;
+    display: flex;
+    overflow-x: hidden;
+  }
+
+  .sidebar {
+    width: 240px;
+    background: linear-gradient(to bottom, #003CFF, #00BCD4);
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar h2 {
+    margin-bottom: 20px;
+  }
+
+  .sidebar ul,
+  .mobile-sidebar ul {
+    list-style: none;
+  }
+
+  .sidebar ul li,
+  .mobile-sidebar ul li {
+    margin: 15px 0;
+  }
+
+  .sidebar ul li a,
+  .mobile-sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .sidebar ul li a:hover,
+  .mobile-sidebar ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateX(5px);
+  }
+
+  .sidebar ul li a.active,
+  .mobile-sidebar ul li a.active {
+    background-color: white;
+    color: #003CFF;
+    font-weight: 700;
+  }
+
+  .main-content {
+    flex: 1;
+    background: white;
+    padding: 30px;
+    color: #003CFF;
+    overflow-x: auto;
+  }
+
+  .main-content h1 {
+    margin-bottom: 20px;
+  }
+
+  .search-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .search-container input {
+    padding: 8px 12px;
+    width: 250px;
+    border: 2px solid #003CFF;
+    border-radius: 5px;
+    color: #003CFF;
+  }
+
+  table {
+    width: 100%;
+    background: #f5f9ff;
+    color: #333;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  th,
+  td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #003CFF;
+    color: white;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+  }
+
+  .status input {
+    margin-right: 10px;
+  }
+
+  /* Top nav for mobile */
+  .mobile-header {
+    display: none;
+    width: 100%;
+    background: white;
+    padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mobile-header h2 {
+    font-size: 18px;
+    color: #003CFF;
+  }
+
+  .hamburger {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #003CFF;
+    cursor: pointer;
+  }
+
+  /* Hidden sidebar on mobile */
+  .mobile-sidebar {
+    display: none;
+    flex-direction: column;
+    background: linear-gradient(to bottom, #003CFF, #00BCD4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100%;
+    padding: 20px;
+    z-index: 1200;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .close-btn {
+    font-size: 24px;
+    color: white;
+    background: none;
+    border: none;
+    align-self: flex-end;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
     body {
-      display: flex;
-      min-height: 100vh;
+      flex-direction: column;
     }
 
     .sidebar {
-      width: 240px;
-      background: linear-gradient(to bottom, #003CFF, #00BCD4);
-      padding: 20px;
-      color: white;
+      display: none;
+    }
+
+    .mobile-header {
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
 
-    .sidebar h2 {
-      color: #ffffff;
-      margin-bottom: 20px;
-      animation: fadeInLeft 1s ease-in-out;
-    }
-
-    .sidebar ul {
-      list-style: none;
-    }
-
-    .sidebar ul li {
-      margin: 15px 0;
-    }
-
-    .sidebar ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-block;
-      padding: 10px 15px;
-      border-radius: 8px;
-      transition: all 0.3s ease-in-out;
-      background-color: rgba(255,255,255,0.1);
-    }
-
-    .sidebar ul li a:hover {
-      background-color: rgba(255,255,255,0.25);
-      transform: translateX(5px);
-    }
-
-    .sidebar ul li a.active {
-      background-color: white;
-      color: #003CFF;
-      font-weight: 700;
+    .mobile-sidebar {
+      display: flex;
     }
 
     .main-content {
-      flex: 1;
-      background: white;
-      padding: 30px;
-      color: #003CFF;
-      overflow-x: auto;
-      animation: fadeIn 0.5s ease-in-out;
-    }
-
-    .main-content h1 {
-      margin-bottom: 20px;
-      color: #003CFF;
+      margin-top: 60px;
+      padding: 20px;
     }
 
     .search-container {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     .search-container input {
-      padding: 8px 12px;
-      width: 250px;
-      border: 2px solid #003CFF;
-      border-radius: 5px;
-      color: #003CFF;
+      width: 100%;
     }
 
     table {
-      width: 100%;
-      background: #f5f9ff;
-      color: #333;
-      border-collapse: collapse;
-      border-radius: 10px;
-      overflow: hidden;
-      animation: fadeInUp 0.8s ease-in-out;
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
     }
+  }
+</style>
 
-    th, td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #003CFF;
-      color: white;
-    }
-
-    .status {
-      display: flex;
-      align-items: center;
-    }
-
-    .status input {
-      margin-right: 10px;
-    }
-
-    @media (max-width: 768px) {
-      .search-container {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .search-container input {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInLeft {
-      from { opacity: 0; transform: translateX(-20px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-  </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div>
-      <h2>Admin Panel</h2>
-      <ul>
-        <li><a href="#" class="active">Appointments</a></li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">Logout</a></li>
-      </ul>
-    </div>
+
+  <!-- Mobile Nav Header -->
+  <div class="mobile-header">
+    <button class="hamburger" id="hamburger">&#9776;</button>
+    <h2>Admin Panel</h2>
   </div>
 
+  <!-- Mobile Sidebar -->
+  <div class="mobile-sidebar" id="mobileSidebar">
+    <button class="close-btn" id="closeSidebar">&times;</button>
+    <h2>Admin Panel</h2>
+    <ul>
+      <li><a href="#" class="active">Appointments</a></li>
+      <li><a href="#">Settings</a></li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Desktop Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <ul>
+      <li><a href="#" class="active">Appointments</a></li>
+      <li><a href="#">Settings</a></li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
   <div class="main-content">
     <h1>Appointment Bookings</h1>
     <div class="search-container">
-      <input type="text" id="searchName" placeholder="Search by Name...">
-      <input type="date" id="searchDate">
+      <input type="text" id="searchName" placeholder="Search by Name..." />
+      <input type="date" id="searchDate" />
     </div>
     <table>
       <thead>
@@ -180,12 +274,23 @@
         </tr>
       </thead>
       <tbody id="appointmentTable">
-        <!-- Data will be inserted dynamically -->
+        <!-- Filled by JavaScript -->
       </tbody>
     </table>
   </div>
 
+  <!-- JavaScript -->
   <script>
+    // Sidebar toggle
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobileSidebar').classList.add('open');
+    });
+
+    document.getElementById('closeSidebar').addEventListener('click', () => {
+      document.getElementById('mobileSidebar').classList.remove('open');
+    });
+
+    // Load data
     document.addEventListener('DOMContentLoaded', () => {
       const searchName = document.getElementById('searchName');
       const searchDate = document.getElementById('searchDate');
@@ -203,37 +308,33 @@
         });
       }
 
-      // Fetch data from backend
       fetch('fetch_appointments.php')
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
           tableBody.innerHTML = '';
-          data.forEach(appointment => {
-            const repliedKey = `replied_${appointment.id}`;
+          data.forEach(app => {
+            const repliedKey = `replied_${app.id}`;
             const isReplied = localStorage.getItem(repliedKey) === 'true';
             const row = document.createElement('tr');
             row.innerHTML = `
-              <td>${appointment.name}</td>
-              <td>${appointment.email}</td>
-              <td>${appointment.phone}</td>
-              <td>${appointment.message}</td>
-              <td>${appointment.date}</td>
+              <td>${app.name}</td>
+              <td>${app.email}</td>
+              <td>${app.phone}</td>
+              <td>${app.message}</td>
+              <td>${app.date}</td>
               <td class="status">
-                <input type="checkbox" ${isReplied ? 'checked' : ''} data-id="${appointment.id}">Yes
+                <input type="checkbox" ${isReplied ? 'checked' : ''} data-id="${app.id}">Yes
               </td>
             `;
             tableBody.appendChild(row);
           });
 
-          // Store replied checkbox value in localStorage
-          document.querySelectorAll('.status input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
-              const id = this.getAttribute('data-id');
-              localStorage.setItem(`replied_${id}`, this.checked);
+          document.querySelectorAll('.status input[type="checkbox"]').forEach(cb => {
+            cb.addEventListener('change', function () {
+              localStorage.setItem(`replied_${this.dataset.id}`, this.checked);
             });
           });
 
-          // Apply initial filters if any
           filterRows();
         });
 
